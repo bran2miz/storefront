@@ -6,7 +6,7 @@ const productSlice = createSlice({
     name: "products",
     initialState: {
         // left is the name of the key and the right is the value
-        productData: productData,
+        productData: productData.products,
         selectedProduct: undefined,
         // numOfHorns: "all"
     },
