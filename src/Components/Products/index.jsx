@@ -19,7 +19,7 @@ const ProductsList = () => {
     return (
         <div>
         <Grid container spacing={2} marginTop={"16px"}>
-        {productData.filter(p => p.category === productCategory || productCategory === "all").map(product => 
+        {productData.filter(p => productCategory === "all" || productCategory === null || p.category === productCategory).map(product => 
             <Product key={product.name} product={product} />
         
         )

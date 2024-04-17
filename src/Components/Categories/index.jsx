@@ -23,7 +23,7 @@ const Categories = () => {
     return (
         <div style={{width: "250px"}}>
             <FormControl fullWidth>
-                <InputLabel id="num-of-horns-label">Horns</InputLabel>
+                <InputLabel id="num-of-horns-label">Categories</InputLabel>
                 <Select
                     labelId="num-of-horns-label"
                     id="num-of-horns"

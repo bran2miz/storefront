@@ -1,6 +1,7 @@
-import {Modal,Card, CardContent, Typography} from "@mui/material"
+import {Button, Modal, Card, CardContent, CardMedia, Typography, CardActions} from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux';
 import productSlice from '../../store/products';
+import cartSlice from "../../store/cart";
 
 const style = {
     position: 'absolute',
@@ -29,6 +30,11 @@ const handleClose = () => {
     // when you click it will pass in the payload to the showBeast, and set the state of selectedBeast from undefined to whatever the payload is. 
 }
 
+const handleAddItem = (product) => {
+    dispatch(cartSlice.actions.addToCart(product))
+    dispatch(productSlice.actions.reduceQuantity(product))
+}
+
   return (
     <Modal
     open={product !== undefined}
@@ -38,6 +44,7 @@ const handleClose = () => {
   >
    {product ? (<Card sx={{style}}>
       <CardContent>
+      <CardMedia sx={{height: 220}} image={product?.image_url} title={product?.name} />
         <Typography gutterBottom variant="h5" component="div">
           {product?.name}
         </Typography>
@@ -45,6 +52,10 @@ const handleClose = () => {
          {product?.category}
         </Typography>
       </CardContent>
+      <CardActions>
+      {product.unavailable ? <Button disabled={product.unavailable}>Out of Stock</Button>: (<Button size="small" onClick={()=> handleAddItem(product)} variant="outlined" color="success" disabled={product.inStock === 0}>Add to Cart</Button>)}
+      <Button size="small" onClick={handleClose} variant='outlined' color='success'>Close</Button>
+      </CardActions>
     </Card>) : <></>
 }
   </Modal>
