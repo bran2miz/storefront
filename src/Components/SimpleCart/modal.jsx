@@ -18,7 +18,7 @@ const CartModal = () => {
     }
 
     return (
-        <Dialog open={viewCart}>
+        <Dialog open={viewCart} data-testid="cart-dialog">
             <DialogTitle>CART</DialogTitle>
             <DialogContent>
                 {cartItems.map((selectedProduct, idx) => (
