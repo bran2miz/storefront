@@ -25,7 +25,7 @@ const Product = ({ product }) => {
     return (
         <Grid item xs={3}>
             <Card data-testid="product-card">
-                <CardMedia sx={{height: 220}} image={product.image_url} title={product.name} />
+                <CardMedia sx={{height: 220}} image={`http://source.unsplash.com/random?${product.name}`} title={product.name} />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         {product.name}
