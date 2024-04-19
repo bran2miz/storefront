@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import cartSlice from "../../store/cart";
 import React from "react";
 import { updateProduct } from "../../store/products";
-import {deleteItemInCart} from "../../store/cart"
+import {deleteItemsInCart} from "../../store/cart"
 
 const CartModal = () => {
     const dispatch = useDispatch();
@@ -17,14 +17,15 @@ const CartModal = () => {
     }
 
     useEffect(()=> {
-        dispatch(deleteItemInCart())
+        dispatch(deleteItemsInCart())
       }, [dispatch])
 
 
     const deleteItem = (selectedProduct) => {
-        dispatch(cartSlice.actions.deleteItemInCart(selectedProduct))
+        dispatch(cartSlice.actions.deleteItemInCart({cartItemId: selectedProduct.cartItemId}))
         // add the handleUpdateProduct here 
-        dispatch(updateProduct(updateProduct({selectedProduct, amount: + 1})))
+        console.log(selectedProduct.inStock);
+        dispatch(updateProduct({product: selectedProduct, amount: + 0}))
     }
 
     return (
@@ -35,7 +36,7 @@ const CartModal = () => {
                     <React.Fragment key={idx}>
                         <ListItem>
                             <ListItemAvatar>
-                                <Avatar alt={selectedProduct.name} src={selectedProduct.image_url} />
+                                <Avatar alt={selectedProduct.name} src={`http://source.unsplash.com/random?${selectedProduct.name}`} />
                             </ListItemAvatar>
                             <ListItemText primary={selectedProduct.name} />
                             <Typography>

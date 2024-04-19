@@ -44,7 +44,7 @@ const handleAddItem = (product) => {
   >
    {product ? (<Card sx={{style}}>
       <CardContent>
-      <CardMedia sx={{height: 220}} image={product?.image_url} title={product?.name} />
+      <CardMedia sx={{height: 220}} image={`http://source.unsplash.com/random?${product?.name}`} title={product?.name} />
         <Typography gutterBottom variant="h5" component="div">
           {product?.name}
         </Typography>

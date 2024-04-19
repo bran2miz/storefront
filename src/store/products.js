@@ -23,6 +23,7 @@ export const getProducts = createAsyncThunk("GET/products", async () => {
 //update a single product 
 
 export const updateProduct = createAsyncThunk("PUT/products/:id", async ({ product, amount }) => {
+    console.log(amount)
     // id is the id of the product I want to update.
     const updatedProduct = { ...product, inStock: product.inStock + amount };
 
@@ -58,36 +59,24 @@ const productSlice = createSlice({
         setCategory: (state, action) => {
             state.setCategory = action.payload
         },
-        // reduceQuantity: (state, action) => {
-        //     // action.payload will replace the undefined selectedProduct in state from undefined to the object once clicked. 
-        //     state.selectedProduct = action.payload;
-        //     // if there isn't anything in the payload, state that it is unavailable.
-        //     if (state.selectedProduct === 0) {
-        //         state.unavailable = true;
-        //     //otherwise
-        //     } else {
-        //     // map through the data.json and at each product if the name in the .json matches the object.name that is coming in, reduce the stock quantity by 1. 
-        //         const newProducts = state.productData.map(product => {
-        //                 if(product.name === action.payload.name) {
-        //                     product.inStock -=1;
-        //                 }
-        //                 return product;
-        //         })
-        //     console.log("newProducts", newProducts)
-        //     state.productData = newProducts;
-        //     state.selectedProduct = {...state.selectedProduct, inStock: state.selectedProduct.inStock -=1}
-        //     }
-        // }
+
         reduceQuantity: (state, action) => {
+             // action.payload will replace the undefined selectedProduct in state from undefined to the object once clicked. 
+
+            //     // map through the data and at each product if the name in the inventory from the backend matches the object.name that is coming in, reduce the stock quantity by 1. 
             const updatedProducts = state.productData.map(product => {
                 if (product.name === action.payload.name) {
                     return { ...product, inStock: product.inStock - 1 };
                 }
                 return product;
             });
-        
+            
+            // productData is now going to equate to the updatedproducts with the stock quantity of the product that is going to be updated by -1. 
             state.productData = updatedProducts;
+
+            // going through the data I will match the updated products by its index and will match the names of what is in my inventory to the name coming in from the payload.
             const selectedProductIndex = updatedProducts.findIndex(product => product.name === action.payload.name);
+            // if the index is less than 1 change the state of selectedProduct from what ever number it is to the index of the updatedProducts. 
             if (selectedProductIndex !== -1) {
                 state.selectedProduct = updatedProducts[selectedProductIndex];
                 if (state.selectedProduct.inStock === 0) {
@@ -106,12 +95,16 @@ const productSlice = createSlice({
             state.productData = action.payload
         })
         .addCase(updateProduct.fulfilled, (state, action) => {
-            console.log(action.payload);
+            console.log("Before update:", state.productData.map(p => ({ name: p.name, inStock: p.inStock })));
             const updatedProduct = action.payload;
 
             const index = state.productData.findIndex(p => p._id === updatedProduct._id);
             console.log(index);
-            state.productData[index] = updatedProduct;
+            if (index !== -1) {
+                state.productData[index] = updatedProduct;
+            }
+            console.log("After update:", state.productData.map(p => ({ name: p.name, inStock: p.inStock })));
+
         })
     },
 });

@@ -25,15 +25,15 @@ const ProductsList = () => {
 
     const productCategory = useSelector(state => state.category.activeCategory)
     return (
-        <div>
-        <Grid container spacing={2} marginTop={"16px"}>
-        {productData.filter(p => productCategory === "All" || productCategory === null || p.category === productCategory?.name).map(product => 
-            <Product key={product.name} product={product} />
+        <>
+        <Grid container spacing={3} marginTop={"16px"}>
+        {productData.filter(p => productCategory === "All" || productCategory === null || p.category === productCategory).map((product,idx) => 
+            <Product key={idx} product={product} />
         
         )
         }
     </Grid>
-    </div>
+    </>
     )
 }
 

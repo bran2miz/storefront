@@ -1,44 +1,45 @@
-// Categories
-// State should contain a list of categories as well as the active category.
-// Each category should have a normalized name, display name, and a description.
-// Create an action that will trigger the reducer to change the active category.
-// Update the active category in the reducer when this action is dispatched.
-
-import { FormControl,InputLabel,MenuItem,Select } from "@mui/material";
-// import { useState } from "react";
-import categorySlice from "../../store/active-category";
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { retrieveCategories } from '../../store/active-category';
+import categorySlice from '../../store/active-category';
 
 const Categories = () => {
-
-    const category = useSelector(state => state.category.activeCategory);
-
     const dispatch = useDispatch();
+    const categories = useSelector(state => state.category.categories);
+    const activeCategory = useSelector(state => state.category.activeCategory);
 
-    const handleChange = (e) => {
-        e.preventDefault();
-        // setHorns(e.target.value);
-        dispatch(categorySlice.actions.setActiveCategory(e.target.value))
-    }
+    useEffect(() => {
+        dispatch(retrieveCategories());
+    }, [dispatch]);
+
+    const handleChange = (event) => {
+        dispatch(categorySlice.actions.setActiveCategory(event.target.value));
+    };
+
     return (
-        <div style={{width: "250px"}}>
-            <FormControl fullWidth>
-                <InputLabel id="num-of-horns-label">Categories</InputLabel>
-                <Select
-                    labelId="num-of-horns-label"
-                    id="num-of-horns"
-                    value={category || "All"}
-                    label="Category"
-                    onChange={handleChange}
-                >
-                    <MenuItem value={"All"}>All</MenuItem>
+        <FormControl fullWidth>
+            <InputLabel id="category-select-label">Categories</InputLabel>
+            <Select
+                labelId="category-select-label"
+                id="category-select"
+                value={activeCategory || ""}
+                label="Category"
+                onChange={handleChange}
+            >
+                <MenuItem value="">Select a category</MenuItem>
+                <MenuItem value={"All"}>All</MenuItem>
                     <MenuItem value={"games"}>Electronics</MenuItem>
-                    <MenuItem value={"clothing"}>Clothing</MenuItem>
+                    <MenuItem value={"clothes"}>Clothing</MenuItem>
                     <MenuItem value={"food"}>Food</MenuItem>
-                </Select>
-            </FormControl>
-        </div>
-    )
-}
+                    <MenuItem value={"weapons"}>Weapons</MenuItem>
+                    <MenuItem value={"cosmetics"}>Cosmetics</MenuItem>
+                    <MenuItem value={"cleaning"}>Cleaning</MenuItem>
+                    <MenuItem value={"office"}>Office</MenuItem>
+
+            </Select>
+        </FormControl>
+    );
+};
 
 export default Categories;

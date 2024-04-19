@@ -14,9 +14,9 @@ const store = configureStore({
   preloadedState: {
     category: {
       categories: [
-        { name: "electronics", displayName: "Electronics", description: "Electronic items" },
-        { name: "clothing", displayName: "Clothing", description: "Apparel and garments" },
-        { name: "food", displayName: "Food", description: "Food and beverages" }
+        { name: "Monopoly", category: "games", price: "1000" },
+        { name: "Smash Bros", category: "games", price: "1000" },
+        { name: "Pizza", category: "food", description: "1.99" }
       ],
       activeCategory: 'All'
     },

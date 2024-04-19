@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_API_URL
 // use this to create a ID for each item
 let nextCartItemId = 1;
 
-export const deleteItemInCart = createAsyncThunk("DELETE/product/:id", async({product})=> {
+export const deleteItemsInCart = createAsyncThunk("DELETE/product/:id", async({product})=> {
     const deletedProduct = {...product};
     const response = await fetch(`${url}/products/${product._id}`, {
         method:'DELETE',
@@ -47,6 +47,15 @@ const cartSlice = createSlice({
             }
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase(deleteItemsInCart.fulfilled, (state,action) => {
+            const deleteProductFromCart = action.payload;
+            console.log("deleteProductFromCart", deleteProductFromCart);
+            const index = state.cart.selectedProduct.findIndex(product => product._id === deleteProductFromCart._id);
+            console.log("index",index )
+            state.cart.selectedProduct[index] = deleteProductFromCart;
+                })
+    }
 });
 
 export default cartSlice;
