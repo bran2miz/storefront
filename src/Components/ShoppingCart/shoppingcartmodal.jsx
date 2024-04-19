@@ -7,7 +7,7 @@ import { updateProduct } from "../../store/products";
 import {deleteItemsInCart} from "../../store/cart";
 import { Link } from "react-router-dom";
 
-const CartModal = () => {
+const ShoppingCartModal = () => {
     const dispatch = useDispatch();
     const viewCart = useSelector(state => state.cart.viewCart);
     const cartItems = useSelector(state => state.cart.cart);
@@ -51,13 +51,10 @@ const CartModal = () => {
             </DialogContent>
         <Typography margin={"20px"}>Total: ${total}</Typography>
         <DialogActions>
-        <Link to={"/checkout"} >
-            <Button variant="outlined" color="success" fullWidth>Checkout</Button>
-            </Link>
             <Button onClick={handleClose} variant="outlined" color="success">Close</Button>
         </DialogActions>
     </Dialog>
   )
 }
 
-export default CartModal
+export default ShoppingCartModal;

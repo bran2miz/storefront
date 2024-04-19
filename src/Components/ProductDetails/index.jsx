@@ -1,8 +1,11 @@
-import {Button, Modal, Card, CardContent, CardMedia, Typography, CardActions} from "@mui/material"
+import {Button, Card, CardContent, CardMedia, Typography, CardActions} from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux';
 import productSlice from '../../store/products';
 import cartSlice from "../../store/cart";
 import { Link } from "react-router-dom";
+import { updateProduct } from "../../store/products";
+import Header from "../Header";
+import CartModal from "../SimpleCart/modal";
 
 const style = {
     position: 'absolute',
@@ -16,53 +19,47 @@ const style = {
     p: 4,
   };
 
-const ProductModal = () => {
+const ProductDetails = () => {
 const product = useSelector(state => state.products.selectedProduct);
 const dispatch = useDispatch();
 
-
-const handleClose = () => {
-    //dispatch an action to update the selected beast
-    // it's like setting state! but we ask the store to do it instead
-    dispatch(productSlice.actions.showProduct(undefined));
-    // dispatch is an instance of the useDispatch method from react-redux.
-    // use it on the slice's action's(within the slice's reducers) and pass thhe payload(what the future beast would be).
-
-    // when you click it will pass in the payload to the showBeast, and set the state of selectedBeast from undefined to whatever the payload is. 
-}
-
 const handleAddItem = (product) => {
     dispatch(cartSlice.actions.addToCart(product))
+    dispatch(updateProduct({product, amount: -1}))
     dispatch(productSlice.actions.reduceQuantity(product))
 }
 
   return (
-    <Modal
-    open={product !== undefined}
-    onClose={handleClose}
-    aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
-  >
+<div>
+    <Header />
+    <CartModal />
    {product ? (<Card sx={{style}}>
-      <CardContent>
-        <Link to={'/details'} style={{textDecoration:'none'}}>
+      
+
       <CardMedia sx={{height: 220}} image={`http://source.unsplash.com/random?${product?.name}`} title={product?.name} />
-      </Link>
+      <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {product?.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-         {product?.category}
+         {product?.inStock} in Stock
         </Typography>
       </CardContent>
       <CardActions>
       {product.unavailable ? <Button disabled={product.unavailable}>Out of Stock</Button>: (<Button size="small" onClick={()=> handleAddItem(product)} variant="outlined" color="success" disabled={product.inStock === 0}>Add to Cart</Button>)}
-      <Button size="small" onClick={handleClose} variant='outlined' color='success'>Close</Button>
+      <Link to="/" style={{textDecoration:'none'}}>
+        <Typography style={{  color: 'green', 
+            margin: '10px', 
+            padding: '3px', 
+            border: '1px solid green', 
+            borderRadius: '5px'}}
+            >Go Back</Typography>
+      </Link>
       </CardActions>
     </Card>) : <></>
 }
-  </Modal>
+</div>
   )
 }
 
-export default ProductModal;
+export default ProductDetails;
