@@ -18,7 +18,7 @@ const store = configureStore({
         { name: "clothing", displayName: "Clothing", description: "Apparel and garments" },
         { name: "food", displayName: "Food", description: "Food and beverages" }
       ],
-      activeCategory: 'all'
+      activeCategory: 'All'
     },
   },
 });

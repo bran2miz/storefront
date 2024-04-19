@@ -1,7 +1,10 @@
 import { Button,Dialog, DialogActions, DialogTitle, DialogContent, Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { useEffect } from "react";
 import cartSlice from "../../store/cart";
 import React from "react";
+import { updateProduct } from "../../store/products";
+import {deleteItemInCart} from "../../store/cart"
 
 const CartModal = () => {
     const dispatch = useDispatch();
@@ -13,8 +16,15 @@ const CartModal = () => {
         dispatch(cartSlice.actions.viewCart(false))
     }
 
+    useEffect(()=> {
+        dispatch(deleteItemInCart())
+      }, [dispatch])
+
+
     const deleteItem = (selectedProduct) => {
         dispatch(cartSlice.actions.deleteItemInCart(selectedProduct))
+        // add the handleUpdateProduct here 
+        dispatch(updateProduct(updateProduct({selectedProduct, amount: + 1})))
     }
 
     return (

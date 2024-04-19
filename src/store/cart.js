@@ -1,7 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const url = import.meta.env.VITE_API_URL
 // use this to create a ID for each item
 let nextCartItemId = 1;
+
+export const deleteItemInCart = createAsyncThunk("DELETE/product/:id", async({product})=> {
+    const deletedProduct = {...product};
+    const response = await fetch(`${url}/products/${product._id}`, {
+        method:'DELETE',
+        body: JSON.stringify(deletedProduct),
+        headers: {'Content-Type': 'application/json'},
+    });
+    const json = await response.json();
+    return json;
+})
 
 const cartSlice = createSlice({
     name:'cart',

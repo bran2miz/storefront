@@ -27,12 +27,12 @@ const Categories = () => {
                 <Select
                     labelId="num-of-horns-label"
                     id="num-of-horns"
-                    value={category || "all"}
+                    value={category || "All"}
                     label="Category"
                     onChange={handleChange}
                 >
-                    <MenuItem value={"all"}>All</MenuItem>
-                    <MenuItem value={"electronics"}>Electronics</MenuItem>
+                    <MenuItem value={"All"}>All</MenuItem>
+                    <MenuItem value={"games"}>Electronics</MenuItem>
                     <MenuItem value={"clothing"}>Clothing</MenuItem>
                     <MenuItem value={"food"}>Food</MenuItem>
                 </Select>
