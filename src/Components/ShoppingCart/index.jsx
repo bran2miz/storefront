@@ -6,7 +6,18 @@ import ShoppingCartModal from "./shoppingcartmodal";
 
 const ShoppingCart = () => {
     const cartItems = useSelector(state => state.cart.cart);
-    const total = cartItems.reduce((accumulator, item) => accumulator + item.price * (item.quantity || 1), 0);
+    
+    // Debugging output to check cartItems and their prices
+    console.log("Cart Items:", cartItems);
+    
+    const total = cartItems.reduce((accumulator, item) => {
+        const price = parseFloat(item.price);
+        const quantity = parseFloat(item.quantity || 1);
+        console.log(`Item: ${item.name}, Price: ${price}, Quantity: ${quantity}`);
+        return accumulator + price * quantity;
+    }, 0);
+
+    console.log("Total:", total);
 
     return (
         <div>
@@ -20,7 +31,7 @@ const ShoppingCart = () => {
                     {cartItems.map((item, idx) => (
                         <ListItem key={idx} sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: 1, borderColor: 'divider' }}>
                             <ListItemText primary={item.name} secondary={item.description} />
-                            <Typography variant="body2">${item.price.toFixed(2)}</Typography>
+                            <Typography variant="body2">${parseFloat(item.price).toFixed(2)}</Typography>
                         </ListItem>
                     ))}
                     <ListItem sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -62,3 +73,4 @@ const ShoppingCart = () => {
 };
 
 export default ShoppingCart;
+

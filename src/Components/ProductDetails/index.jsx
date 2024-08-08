@@ -23,6 +23,9 @@ const ProductDetails = () => {
 const product = useSelector(state => state.products.selectedProduct);
 const dispatch = useDispatch();
 
+const imageUrl = product?.image || `https://i.natgeofe.com/n/0652a07e-42ed-4f3d-b2ea-0538de0c5ba3/seattle-travel.jpg?w=2048&h=1358`;
+
+
 const handleAddItem = (product) => {
     dispatch(cartSlice.actions.addToCart(product))
     dispatch(updateProduct({product, amount: -1}))
@@ -37,7 +40,7 @@ const handleAddItem = (product) => {
       
 
       {/* <CardMedia sx={{height: 220}} image={`http://source.unsplash.com/random?${product?.name}`} title={product?.name} /> */}
-      <CardMedia sx={{height: 220}} image={`https://i.natgeofe.com/n/0652a07e-42ed-4f3d-b2ea-0538de0c5ba3/seattle-travel.jpg?w=2048&h=1358`} title={product?.name} />
+      <CardMedia sx={{height: 220}} image={imageUrl} title={product.name} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {product?.name}
