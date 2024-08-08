@@ -16,7 +16,7 @@ export const getProducts = createAsyncThunk("GET/products", async () => {
 
     const response = await fetch(`${url}/products`);
     const json = await response.json();
-    return json.results;
+    return json;
 
 });
 

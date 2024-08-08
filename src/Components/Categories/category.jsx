@@ -18,8 +18,8 @@ const Category = ({category}) => {
                 title={category.name}
                 />
                 <CardContent>
-                    <Typography component="div">{category.name}</Typography>
-                    <Typography variant='body2' color="text.secondary">Click here to see all {category.name}</Typography>
+                    <Typography component="div">{category.displayName}</Typography>
+                    <Typography variant='body2' color="text.secondary">Click here to see all {category.displayName}</Typography>
                 </CardContent>
                 <CardActions>
                     <Button onClick={handleClick} size="small" variant="outlined" color="success">{`Select ${category.name}`}</Button>
